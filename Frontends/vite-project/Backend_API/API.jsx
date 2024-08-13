@@ -1,1 +1,0 @@
-export const BACKEND_API_DEPLOY_URL ="https://my-app.harash-poriya.workers.dev"
