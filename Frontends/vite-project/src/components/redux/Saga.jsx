@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import { DEPLOY_URL } from '../../../backend_API/API';
+import { DEPLOY_URL } from '../backend_API/API';
 import {
   signupUserSuccess,
   signupUserFailed,
