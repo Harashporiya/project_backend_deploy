@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import { BACKEND_API_DEPLOY_URL } from '../../../Backend_API/API';
+import { DEPLOY_URL } from '../../../backend_API/API';
 import {
   signupUserSuccess,
   signupUserFailed,
@@ -13,7 +13,7 @@ import {
 // Worker Saga for Signup
 function* signupUserSaga(action) {
   try {
-    const response = yield call(axios.post, `${BACKEND_API_DEPLOY_URL}/user/signup`, action.payload);
+    const response = yield call(axios.post, `${DEPLOY_URL}/user/signup`, action.payload);
     yield put(signupUserSuccess(response.data));
    
   } catch (error) {
@@ -24,7 +24,7 @@ function* signupUserSaga(action) {
 // Worker Saga for Login
 function* loginUserSaga(action) {
   try {
-    const response = yield call(axios.post, `${BACKEND_API_DEPLOY_URL}/user/login`, action.payload);
+    const response = yield call(axios.post, `${DEPLOY_URL}/user/login`, action.payload);
     yield put(loginUserSuccess(response.data));
   } catch (error) {
     yield put(loginUserFailed(error.message));

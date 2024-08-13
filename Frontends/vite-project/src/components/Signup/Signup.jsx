@@ -82,7 +82,7 @@ function Signup() {
                         {status === 'succeeded' ? 'Signup successful!' : status}
                     </div>
                 )}
-                {showMessage && error && <div className="text-red-900 text-2xl text-center font-bold"></div>}
+                {showMessage && error && <div className="text-red-900 text-2xl text-center font-bold">{error}</div>}
             </form>
         </div>
     );
