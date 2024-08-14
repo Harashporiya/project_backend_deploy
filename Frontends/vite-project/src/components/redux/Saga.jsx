@@ -45,9 +45,9 @@ function* moviesSaga(action){
 
 // Watcher Saga
 function* Saga() {
-  yield takeLatest('user/signupUser', signupUserSaga);
-  yield takeLatest('user/loginUser', loginUserSaga);
-  yield takeLatest('movies/moviesAdd', moviesSaga)
+  yield takeLatest('app/signupUser', signupUserSaga);
+  yield takeLatest('app/loginUser', loginUserSaga);
+  yield takeLatest('app/moviesAdd', moviesSaga)
 }
 
 export default Saga;

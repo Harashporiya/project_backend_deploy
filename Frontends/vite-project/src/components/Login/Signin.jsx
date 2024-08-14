@@ -10,7 +10,7 @@ function Signin() {
     const navigate = useNavigate('')
 
     const dispatch = useDispatch();
-    const { status, error } = useSelector((state) => state.user);
+    const { status, error } = useSelector((state) => state.app);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,7 +34,8 @@ function Signin() {
     }, [status, showMessage]);
 
     return (<>
-            
+             <div className = " h-screen w-screen bg-black bg-grid-white/[0.2]  relative flex flex-col  items-center justify-center">
+             <div className = " absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" ></div>
             <form className="p-10 border-[1px] bg-black border-white  rounded-xl space-y-4" onSubmit={handleSubmit}>
             <p className="text-white text-2xl ml-2">Login</p>
             <p className="text-gray-300 text-md ml-2">Enter your email below to login to your account</p>
@@ -77,6 +78,7 @@ function Signin() {
                 )}
                 {showMessage && error && <div className="text-red-900 text-2xl text-center font-bold">{error}</div>}
             </form>
+            </div>
             </>
     );
 }

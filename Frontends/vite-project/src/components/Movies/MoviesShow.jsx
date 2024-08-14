@@ -1,108 +1,49 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { moviesAdd } from "../redux/Slice";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import "./index.css"
+const DEPLOY_URL = import.meta.env.VITE_DEPLOY_URL;
 
 function MoviesShow() {
-    const [Image, setImage] = useState('');
-    const [Hero_Name, setHero_Name] = useState('');
-    const [Real_Name, setReal_Name] = useState('');
-    const [SuperPower, setSuperPower] = useState('');
-    const [showMessage, setShowMessage] = useState(false);
-
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
     
-    const status = useSelector((state) => state.movies.status);
-    const error = useSelector((state) => state.movies.error);
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatch(moviesAdd({ Image, Hero_Name, Real_Name, SuperPower }));
-        setShowMessage(true);
-    };
 
     useEffect(() => {
-        if (status === 'succeeded') {
+        const fetchMovies = async () => {
+            try {
+                const response = await axios.get(`${DEPLOY_URL}/api/marvel`);
+                setMovies(response.data);
+            } catch (error) {
+                setError(error.message);
+                console.error('Error fetching movies:', error);
+            }
+        };
 
-        }
-
-        if (showMessage) {
-            const timer = setTimeout(() => {
-                setShowMessage(false);
-            }, 5000); 
-
-            return () => clearTimeout(timer);
-        }
-    }, [status, showMessage, navigate]);
+        fetchMovies();
+    }, []);
 
     return (
-        <>
-            <form className="p-10 border-[1px] bg-black border-white rounded-xl space-y-4" onSubmit={handleSubmit}>
-                <p className="text-white text-2xl ml-2">Movies Add</p>
-                <div className="space-y-2">
-                    <label className="p-2 text-white text-xl" htmlFor="image">Image URL</label>
-                    <input
-                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
-                        type="url"
-                        id="image"
-                        value={Image}
-                        onChange={(e) => setImage(e.target.value)}
-                        placeholder="url......"
-                        required
-                    />
-                </div>
-                <div className="space-y-2">
-                    <label className="p-2 text-white text-xl" htmlFor="heroName">Hero Name</label>
-                    <input
-                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
-                        type="text"
-                        id="heroName"
-                        value={Hero_Name}
-                        onChange={(e) => setHero_Name(e.target.value)}
-                        placeholder="Hero Name"
-                        required
-                    />
-                </div>
-                <div className="space-y-2">
-                    <label className="p-2 text-white text-xl" htmlFor="realName">Real Name</label>
-                    <input
-                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
-                        type="text"
-                        id="realName"
-                        value={Real_Name}
-                        onChange={(e) => setReal_Name(e.target.value)}
-                        placeholder="Real name"
-                        required
-                    />
-                </div>
-                <div className="space-y-2">
-                    <label className="p-2 text-white text-xl" htmlFor="superPower">SuperPower</label>
-                    <input
-                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
-                        type="text"
-                        id="superPower"
-                        value={SuperPower}
-                        onChange={(e) => setSuperPower(e.target.value)}
-                        placeholder="SuperPower"
-                        required
-                    />
-                </div>
-                <div className="flex justify-center">
-                    <button type="submit" className="text-black w-full font-normal text-[17px] bg-white p-1 rounded-lg hover:bg-white">
-                        Add Movie
-                    </button>
-                </div>
-
-                {showMessage && status && (
-                    <div className={`text-center text-xl font-bold ${status === 'Failed' ? 'text-red-900' : 'text-white'}`}>
-                        {status === 'succeeded' ? 'Movie Add Successful!' : status}
-                    </div>
-                )}
-                {showMessage && error && <div className="text-red-900 text-2xl text-center font-bold">{error}</div>}
-            </form>
-        </>
+        <div className="bg-gray-900 min-h-screen text-white p-8">
+            <h1 className="text-4xl font-bold mb-8">Movies List</h1>
+            {error && <p className="text-red-500">{error}</p>}
+            <div className="flex flex-wrap pt-28 justify-center ">
+            {movies && movies.map((datas) => (
+          <div id='card' className='rounded-lg shadow-2xl bg-white m-4 ' key={datas.id}>
+            <img id='img' className='cover rounded-t-lg h-[400px] w-[400px]' src={datas.Image} alt='' />
+            <div className='p-4 text-black'>
+              <p className='font-bold text-xl'>{datas.Hero_Name}</p>
+              <p className='text-gray-600'>{datas.Real_Name}</p>
+              <p className='mt-2'><span className='font-bold'>Superpower:</span> {datas.Superpower}</p>
+              <p className='mt-2'><span className='font-bold'>First Appearance:</span> {datas.First_Appearance}</p>
+              <p className='mt-2'><span className='font-bold'>Costume Quirk:</span> {datas.Costume_Quirk}</p>
+              <p className='mt-2'><span className='font-bold'>Catchphrase:</span> {datas.Catchphrase}</p>
+              <p className='mt-2'><span className='font-bold'>Backstory:</span> {datas.Backstory}</p>
+              <p className='mt-2'><span className='font-bold'>Most Useless Moment:</span> {datas.Most_Useless_Moment}</p>
+            </div>
+          </div>
+        ))}
+            </div>
+        </div>
     );
 }
 

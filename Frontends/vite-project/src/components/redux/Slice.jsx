@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // User slice
 const Slice = createSlice({
-  name: ['user', 'movies'],
+  name: 'app',
   initialState: {
     user: null,
     movies:null,
@@ -35,12 +35,12 @@ const Slice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     },
-    moviesAdd:()=>{
+    moviesAdd:(state)=>{
       state.status = 'loading'
     },
     moviesAddSuccess:(state, action)=>{
       state.status = 'succeeded';
-      state.movies = action.payload.user;
+      state.movies = action.payload.movies;
       state.token = action.payload.token;
     },
     moviesAddFailed: (state, action)=>{

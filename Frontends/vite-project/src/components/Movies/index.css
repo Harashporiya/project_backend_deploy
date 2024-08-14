@@ -1,0 +1,14 @@
+#img{
+    width: 400px;
+    height: 400px;
+}
+#card {
+    max-width: 400px;
+}
+
+#card p {
+    word-wrap: break-word; 
+}
+
+
+  
