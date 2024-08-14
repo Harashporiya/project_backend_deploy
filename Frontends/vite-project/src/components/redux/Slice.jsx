@@ -2,9 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 // User slice
 const Slice = createSlice({
-  name: 'user',
+  name: ['user', 'movies'],
   initialState: {
     user: null,
+    movies:null,
     token: null,
     status: null,
     error: null,
@@ -34,6 +35,18 @@ const Slice = createSlice({
       state.status = 'failed';
       state.error = action.payload;
     },
+    moviesAdd:()=>{
+      state.status = 'loading'
+    },
+    moviesAddSuccess:(state, action)=>{
+      state.status = 'succeeded';
+      state.movies = action.payload.user;
+      state.token = action.payload.token;
+    },
+    moviesAddFailed: (state, action)=>{
+      state.status = 'failed';
+      state.error = action.payload;
+    }
   },
 });
 
@@ -45,6 +58,9 @@ export const {
   signupUserFailed,
   loginUserSuccess,
   loginUserFailed,
+  moviesAddFailed,
+  moviesAddSuccess,
+  moviesAdd,
 } = Slice.actions;
 
 export default Slice.reducer;

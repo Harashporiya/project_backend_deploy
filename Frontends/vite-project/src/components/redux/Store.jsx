@@ -8,6 +8,7 @@ const sagaMiddleware = createSagaMiddleware();
 const Store = configureStore({
   reducer: {
     user: userReducer,
+    movies:userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(sagaMiddleware),

@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signupUser } from "../redux/Slice";
+import { Link, useNavigate } from "react-router-dom";
 
 function Signup() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showMessage, setShowMessage] = useState(false);
+    const navigate = useNavigate('')
 
     const dispatch = useDispatch();
     const { status, error } = useSelector((state) => state.user);
@@ -33,49 +35,55 @@ function Signup() {
         }
     }, [status, showMessage]);
 
-    return (
-        <div className="min-h-screen flex justify-center items-center">
-            <form className="bg-sky-700 p-10 rounded-xl space-y-4" onSubmit={handleSubmit}>
+    return (<>
+            
+            <form className="p-10 border-[1px] bg-black border-white  rounded-xl space-y-4" onSubmit={handleSubmit}>
+            <p className="text-white text-2xl ml-2">Signup</p>
+            <p className="text-gray-300 text-md ml-2">Enter your information to create an account</p>
                 <div className="space-y-2">
-                    <label className="p-4 text-white font-bold text-2xl" htmlFor="username"> Username: </label>
+                    <label className="p-2 text-white  text-xl" htmlFor="username"> Username</label>
                     <input
-                        className="border-2 border-gray-950 p-2 rounded-md w-full"
+                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
                         type="text"
                         id="username"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        placeholder="Enter your Username"
+                        placeholder="Jhon"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label className="p-4 text-white font-bold text-2xl" htmlFor="email"> Email: </label>
+                    <label className="p-2 text-white  text-xl" htmlFor="email"> Email</label>
                     <input
-                        className="border-2 border-gray-950 p-2 rounded-md w-full"
+                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
                         type="email"
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
+                        placeholder="@example.com"
                         required
                     />
                 </div>
                 <div className="space-y-2">
-                    <label className="p-4 text-white font-bold text-2xl" htmlFor="password"> Password: </label>
+                    <label className="p-2 text-white text-xl" htmlFor="password"> Password </label>
                     <input
-                        className="border-2 border-gray-950 p-2 rounded-md w-full"
+                        className="border-[1px] border-gray-500 text-white p-2 rounded-md w-full bg-black focus:border-white focus:border-1"
                         type="password"
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        placeholder="Enter your password"
+                        placeholder="password"
                         required
                     />
                 </div>
                 <div className="flex justify-center">
-                    <button type="submit" className="text-white font-bold text-2xl bg-blue-950 p-4 rounded-lg hover:bg-slate-900">
-                        Signup
+                    <button type="submit" className="text-black w-full font-normal  text-[17px] bg-white p-1 rounded-lg hover:bg-white">
+                        Create an account
                     </button>
+                </div>
+             
+                <div className="flex items-center justify-center">
+                <p className="text-white text-ms">Already have an account?<Link to="/signin"  className="text-blue-500 hover:text-blue-300"> Signin</Link>   <p onClick={()=>navigate("/signin")}></p></p>
                 </div>
                 {showMessage && status && (
                     <div className={`text-center text-xl font-bold ${status === 'Failed' ? 'text-red-900' : 'text-white'}`}>
@@ -84,7 +92,7 @@ function Signup() {
                 )}
                 {showMessage && error && <div className="text-red-900 text-2xl text-center font-bold">{error}</div>}
             </form>
-        </div>
+            </>
     );
 }
 

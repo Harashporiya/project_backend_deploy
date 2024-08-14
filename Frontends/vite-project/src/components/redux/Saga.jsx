@@ -1,12 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 const DEPLOY_URL = import.meta.env.VITE_DEPLOY_URL;
-console.log(DEPLOY_URL)
+
 import {
   signupUserSuccess,
   signupUserFailed,
   loginUserSuccess,
   loginUserFailed,
+  moviesAddFailed,
+  moviesAddSuccess,
 } from './Slice'; 
 
 
@@ -32,10 +34,20 @@ function* loginUserSaga(action) {
   }
 }
 
+function* moviesSaga(action){
+  try {
+    const response = yield call(axios.post, `${DEPLOY_URL}/api/add`, action.payload);
+    yield put(moviesAddSuccess(response.data));
+  } catch (error) {
+    yield put(moviesAddFailed(error.message));
+  }
+}
+
 // Watcher Saga
 function* Saga() {
   yield takeLatest('user/signupUser', signupUserSaga);
   yield takeLatest('user/loginUser', loginUserSaga);
+  yield takeLatest('movies/moviesAdd', moviesSaga)
 }
 
 export default Saga;
