@@ -1,6 +1,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
-import { DEPLOY_URL } from '../backend_API/API';
+const DEPLOY_URL = import.meta.env.VITE_DEPLOY_URL;
+console.log(DEPLOY_URL)
 import {
   signupUserSuccess,
   signupUserFailed,
