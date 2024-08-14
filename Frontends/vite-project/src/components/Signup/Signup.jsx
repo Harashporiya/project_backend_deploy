@@ -15,8 +15,16 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(signupUser({ name, email, password }));
+        try {
+            dispatch(signupUser({ name, email, password }));
         setShowMessage(true);
+        setTimeout(()=>{
+            navigate("/moviesShow")
+        },3000)
+        } catch (error) {
+            console.log("error", error);
+        }
+        
     };
 
     useEffect(() => {
