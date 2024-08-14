@@ -44,7 +44,8 @@ function AddMovies() {
     }, [status, showMessage, navigate]);
 
     return (
-        <>
+        <><div className = " h-screen w-screen bg-black bg-grid-white/[0.2]  relative flex flex-col  items-center justify-center">
+             <div className = " absolute pointer-events-none inset-0 flex items-center justify-center bg-black [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]" ></div>
             <form className="p-10 border-[1px] bg-black border-white rounded-xl space-y-4" onSubmit={handleSubmit}>
                 <p className="text-white text-2xl ml-2">Movies Add</p>
                 <div className="space-y-2">
@@ -108,6 +109,7 @@ function AddMovies() {
                 )}
                 {showMessage && error && <div className="text-red-900 text-2xl text-center font-bold">{error}</div>}
             </form>
+            </div>
         </>
     );
 }
