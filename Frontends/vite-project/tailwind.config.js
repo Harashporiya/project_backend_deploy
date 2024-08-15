@@ -16,6 +16,10 @@ export default {
     extend: {
       animation: {
         shimmer: "shimmer 2s linear infinite",
+        screens: {
+        'xs': '480px',
+        '3xl': '1600px',
+      },
       },
       keyframes: {
         shimmer: {
