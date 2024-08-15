@@ -14,8 +14,16 @@ function Signin() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+       try {
         dispatch(loginUser({ email, password }));
         setShowMessage(true);
+        setTimeout(()=>{
+            navigate("/moviesShow")
+        },5000)
+       
+       } catch (error) {
+        console.log("Error", error);
+       }
     };
 
     useEffect(() => {

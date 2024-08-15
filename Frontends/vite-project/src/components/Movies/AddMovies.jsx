@@ -22,6 +22,9 @@ function AddMovies() {
         try {
              dispatch(moviesAdd({ Image, Hero_Name, Real_Name, Superpower }));
             setShowMessage(true);
+           setTimeout(()=>{
+            navigate("/moviesShow")
+           },4000)
         } catch (err) {
             console.log('Failed to add movie: ', err);
             setShowMessage(true);
@@ -31,7 +34,10 @@ function AddMovies() {
 
     useEffect(() => {
         if (status === 'succeeded') {
-
+         setImage('')
+         setHero_Name('')
+         setReal_Name('')
+         setSuperPower('')
         }
 
         if (showMessage) {
